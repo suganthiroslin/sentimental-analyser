@@ -13,7 +13,11 @@ from django.views.decorators.csrf import csrf_exempt
 # =========================================================
 
 def home(request):
-    return render(request, 'sentiment/home.html')
+
+    return render(
+        request,
+        'sentiment/home.html'
+    )
 
 
 # =========================================================
@@ -21,7 +25,11 @@ def home(request):
 # =========================================================
 
 def about(request):
-    return render(request, 'sentiment/about.html')
+
+    return render(
+        request,
+        'sentiment/about.html'
+    )
 
 
 # =========================================================
@@ -37,42 +45,50 @@ def register_view(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        # Check password
+
+        # Check passwords
+
         if password != confirm_password:
 
             messages.error(
                 request,
-                "Passwords do not match."
+                'Passwords do not match.'
             )
 
             return redirect('register')
 
 
         # Check username
-        if User.objects.filter(username=username).exists():
+
+        if User.objects.filter(
+            username=username
+        ).exists():
 
             messages.error(
                 request,
-                "Username already exists."
+                'Username already exists.'
             )
 
             return redirect('register')
 
 
         # Create user
+
         user = User.objects.create_user(
             username=username,
             email=email,
             password=password
         )
 
+
         user.save()
 
 
         messages.success(
             request,
-            "Registration successful! Please login."
+            'Registration successful! Please login.'
         )
+
 
         return redirect('login')
 
@@ -104,7 +120,10 @@ def login_view(request):
 
         if user is not None:
 
-            login(request, user)
+            login(
+                request,
+                user
+            )
 
             return redirect('home')
 
@@ -113,7 +132,7 @@ def login_view(request):
 
             messages.error(
                 request,
-                "Invalid username or password."
+                'Invalid username or password.'
             )
 
             return redirect('login')
@@ -143,7 +162,9 @@ def logout_view(request):
 @csrf_exempt
 def analyze_api(request):
 
-    # Only POST method allowed
+    # -----------------------------------------------------
+    # Only POST is allowed
+    # -----------------------------------------------------
 
     if request.method != 'POST':
 
@@ -155,11 +176,15 @@ def analyze_api(request):
         )
 
 
-    # Read JSON data
+    # -----------------------------------------------------
+    # Read JSON
+    # -----------------------------------------------------
 
     try:
 
-        data = json.loads(request.body)
+        data = json.loads(
+            request.body
+        )
 
     except json.JSONDecodeError:
 
@@ -171,12 +196,19 @@ def analyze_api(request):
         )
 
 
+    # -----------------------------------------------------
     # Get text
+    # -----------------------------------------------------
 
-    text = data.get('text', '').strip()
+    text = data.get(
+        'text',
+        ''
+    ).strip()
 
 
+    # -----------------------------------------------------
     # Check empty text
+    # -----------------------------------------------------
 
     if not text:
 
@@ -192,14 +224,17 @@ def analyze_api(request):
     # TEMPORARY SENTIMENT ANALYSIS
     # =====================================================
     #
-    # This is only for testing the connection between
-    # Netlify and Django.
+    # This is only for testing the
+    # Netlify -> Render connection.
     #
-    # Later we will replace this with your actual
-    # NLP / Machine Learning model.
+    # Later we will replace this with
+    # your actual NLP / ML model.
+    #
     # =====================================================
 
+
     positive_words = [
+
         'good',
         'great',
         'excellent',
@@ -215,10 +250,12 @@ def analyze_api(request):
         'enjoy',
         'enjoyed',
         'perfect'
+
     ]
 
 
     negative_words = [
+
         'bad',
         'worst',
         'terrible',
@@ -234,23 +271,26 @@ def analyze_api(request):
         'disappointing',
         'useless',
         'problem'
+
     ]
 
 
-    # Convert text to lowercase
+    # -----------------------------------------------------
+    # Split sentence into words
+    # -----------------------------------------------------
 
     words = text.lower().split()
 
-
-    # Count words
 
     positive_count = 0
     negative_count = 0
 
 
-    for word in words:
+    # -----------------------------------------------------
+    # Count positive and negative words
+    # -----------------------------------------------------
 
-        # Remove punctuation
+    for word in words:
 
         clean_word = word.strip(
             ".,!?;:'\"()[]{}"
@@ -267,24 +307,28 @@ def analyze_api(request):
             negative_count += 1
 
 
+    # -----------------------------------------------------
     # Determine sentiment
+    # -----------------------------------------------------
 
     if positive_count > negative_count:
 
-        sentiment = "Positive 😊"
+        sentiment = 'Positive 😊'
 
 
     elif negative_count > positive_count:
 
-        sentiment = "Negative 😞"
+        sentiment = 'Negative 😞'
 
 
     else:
 
-        sentiment = "Neutral 😐"
+        sentiment = 'Neutral 😐'
 
 
+    # -----------------------------------------------------
     # Return JSON response
+    # -----------------------------------------------------
 
     return JsonResponse(
         {
