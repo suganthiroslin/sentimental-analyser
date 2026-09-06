@@ -1,0 +1,244 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentiment Analysis System</title>
+
+    <link rel="stylesheet"
+          href="{% static 'sentiment/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- ==================== Navigation Bar ==================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Sentiment<span>AI</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'about' %}">
+                About
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <span style="
+                    color: #4f46e5;
+                    font-weight: bold;
+                ">
+                    Welcome, {{ user.username }} 👋
+                </span>
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+                <a href="{% url 'register' %}">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <!-- ==================== Main Section ==================== -->
+
+    <main class="hero">
+
+        <div class="hero-content">
+
+
+            <!-- Welcome message after login -->
+
+            {% if user.is_authenticated %}
+
+                <p style="
+                    color: #4f46e5;
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 15px;
+                ">
+                    Welcome, {{ user.username }}! 👋
+                </p>
+
+            {% endif %}
+
+
+            <p class="small-title">
+                AI POWERED NLP SYSTEM
+            </p>
+
+
+            <h1>
+                Understand the
+                <span>Emotion</span>
+                Behind Your Words
+            </h1>
+
+
+            <p class="description">
+
+                Enter a sentence and our sentiment analysis system
+                will identify whether the sentiment is positive,
+                negative, or neutral.
+
+            </p>
+
+
+            <!-- ================================================= -->
+            <!-- LOGGED-IN USER -->
+            <!-- Sentiment Analysis Form -->
+            <!-- ================================================= -->
+
+            {% if user.is_authenticated %}
+
+                <div class="sentiment-card">
+
+                    <label for="sentimentText">
+                        Enter your sentence
+                    </label>
+
+
+                    <textarea
+                        id="sentimentText"
+                        placeholder="Example: I really enjoyed this product..."
+                        rows="5"></textarea>
+
+
+                    <button
+                        id="analyzeBtn"
+                        onclick="analyzeSentiment()">
+
+                        Analyze Sentiment
+
+                    </button>
+
+
+                    <!-- Result -->
+
+                    <div id="result" class="result hidden">
+
+                        <p class="result-label">
+                            Sentiment Result
+                        </p>
+
+                        <h2 id="sentimentResult">
+                            Positive
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+            <!-- ================================================= -->
+            <!-- NOT LOGGED-IN USER -->
+            <!-- ================================================= -->
+
+            {% else %}
+
+                <div class="sentiment-card"
+                     style="text-align: center;">
+
+                    <h2 style="
+                        color: #4f46e5;
+                        margin-bottom: 15px;
+                    ">
+                        Login Required 🔐
+                    </h2>
+
+
+                    <p style="
+                        color: #6b7280;
+                        margin-bottom: 20px;
+                        line-height: 1.6;
+                    ">
+                        Please login or create an account
+                        to use the Sentiment Analysis system.
+                    </p>
+
+
+                    <a href="{% url 'login' %}"
+                       style="
+                           display: block;
+                           padding: 14px;
+                           background: #4f46e5;
+                           color: white;
+                           text-decoration: none;
+                           border-radius: 10px;
+                           font-weight: bold;
+                       ">
+
+                        Login to Analyze
+
+                    </a>
+
+
+                    <p style="
+                        margin-top: 15px;
+                        color: #6b7280;
+                    ">
+
+                        Don't have an account?
+
+                        <a href="{% url 'register' %}"
+                           style="
+                               color: #ec4899;
+                               font-weight: bold;
+                               text-decoration: none;
+                           ">
+
+                            Register
+
+                        </a>
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================== Footer ==================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Sentiment Analysis System
+        </p>
+
+    </footer>
+
+
+    <script src="{% static 'sentiment/js/script.js' %}"></script>
+
+</body>
+
+</html>
