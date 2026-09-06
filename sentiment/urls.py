@@ -1,14 +1,60 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
-    path('', views.home, name='home'),
 
-    path('about/', views.about, name='about'),
+    # ==================== HOME ====================
 
-    path('login/', views.login_view, name='login'),
+    path(
+        '',
+        views.home,
+        name='home'
+    ),
 
-    path('register/', views.register_view, name='register'),
 
-    path('logout/', views.logout_view, name='logout'),
+    # ==================== ABOUT ====================
+
+    path(
+        'about/',
+        views.about,
+        name='about'
+    ),
+
+
+    # ==================== LOGIN ====================
+
+    path(
+        'login/',
+        views.login_view,
+        name='login'
+    ),
+
+
+    # ==================== REGISTER ====================
+
+    path(
+        'register/',
+        views.register_view,
+        name='register'
+    ),
+
+
+    # ==================== LOGOUT ====================
+
+    path(
+        'logout/',
+        views.logout_view,
+        name='logout'
+    ),
+
+
+    # ==================== SENTIMENT API ====================
+
+    path(
+        'api/analyze/',
+        views.analyze_api,
+        name='analyze_api'
+    ),
+
 ]
