@@ -1,5 +1,4 @@
-{% load static %}
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +12,8 @@
     <title>Register - SentimentAI</title>
 
     <link rel="stylesheet"
-          href="{% static 'sentiment/css/style.css' %}">
+          href="css/style.css">
+
 
     <style>
 
@@ -25,6 +25,7 @@
             padding: 40px 20px;
         }
 
+
         .auth-card {
             width: 100%;
             max-width: 450px;
@@ -34,15 +35,18 @@
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
         }
 
+
         .auth-card h1 {
             text-align: center;
             font-size: 32px;
             margin-bottom: 10px;
         }
 
+
         .auth-card h1 span {
             color: #ec4899;
         }
+
 
         .auth-description {
             text-align: center;
@@ -50,15 +54,18 @@
             margin-bottom: 30px;
         }
 
+
         .form-group {
             margin-bottom: 18px;
         }
+
 
         .form-group label {
             display: block;
             font-weight: bold;
             margin-bottom: 8px;
         }
+
 
         .form-group input {
             width: 100%;
@@ -67,11 +74,14 @@
             border-radius: 8px;
             font-size: 15px;
             outline: none;
+            box-sizing: border-box;
         }
+
 
         .form-group input:focus {
             border-color: #6366f1;
         }
+
 
         .register-button {
             width: 100%;
@@ -86,9 +96,17 @@
             margin-top: 5px;
         }
 
+
         .register-button:hover {
             background: #4338ca;
         }
+
+
+        .register-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
 
         .auth-footer {
             text-align: center;
@@ -96,10 +114,33 @@
             color: #6b7280;
         }
 
+
         .auth-footer a {
             color: #4f46e5;
             text-decoration: none;
             font-weight: bold;
+        }
+
+
+        .message {
+            display: none;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+
+        .error-message {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
         }
 
     </style>
@@ -110,27 +151,30 @@
 <body>
 
 
+<!-- ==================== Navigation ==================== -->
+
 <nav class="navbar">
 
     <div class="logo">
         Sentiment<span>AI</span>
     </div>
 
+
     <div class="nav-links">
 
-        <a href="{% url 'home' %}">
+        <a href="index.html">
             Home
         </a>
 
-        <a href="{% url 'about' %}">
+        <a href="about.html">
             About
         </a>
 
-        <a href="{% url 'login' %}">
+        <a href="login.html">
             Login
         </a>
 
-        <a href="{% url 'register' %}">
+        <a href="register.html">
             Register
         </a>
 
@@ -140,29 +184,53 @@
 
 
 
+<!-- ==================== Register Section ==================== -->
+
 <div class="auth-container">
 
     <div class="auth-card">
 
+
         <h1>
             Create <span>Account</span>
         </h1>
+
 
         <p class="auth-description">
             Create your SentimentAI account
         </p>
 
 
-        <form method="POST">
 
-            {% csrf_token %}
+        <!-- Error message -->
 
+        <div id="errorMessage"
+             class="message error-message">
+        </div>
+
+
+
+        <!-- Success message -->
+
+        <div id="successMessage"
+             class="message success-message">
+        </div>
+
+
+
+        <!-- Register Form -->
+
+        <form id="registerForm">
+
+
+            <!-- Username -->
 
             <div class="form-group">
 
                 <label for="username">
                     Username
                 </label>
+
 
                 <input
                     type="text"
@@ -174,11 +242,15 @@
             </div>
 
 
+
+            <!-- Email -->
+
             <div class="form-group">
 
                 <label for="email">
                     Email
                 </label>
+
 
                 <input
                     type="email"
@@ -190,11 +262,15 @@
             </div>
 
 
+
+            <!-- Password -->
+
             <div class="form-group">
 
                 <label for="password">
                     Password
                 </label>
+
 
                 <input
                     type="password"
@@ -206,11 +282,15 @@
             </div>
 
 
+
+            <!-- Confirm Password -->
+
             <div class="form-group">
 
                 <label for="confirm_password">
                     Confirm Password
                 </label>
+
 
                 <input
                     type="password"
@@ -222,32 +302,43 @@
             </div>
 
 
+
+            <!-- Register Button -->
+
             <button
                 type="submit"
+                id="registerButton"
                 class="register-button">
 
                 Create Account
 
             </button>
 
+
         </form>
 
+
+
+        <!-- Login -->
 
         <p class="auth-footer">
 
             Already have an account?
 
-            <a href="{% url 'login' %}">
+            <a href="login.html">
                 Login
             </a>
 
         </p>
+
 
     </div>
 
 </div>
 
 
+
+<!-- ==================== Footer ==================== -->
 
 <footer>
 
@@ -258,6 +349,226 @@
 </footer>
 
 
+
+<!-- ==================== Register JavaScript ==================== -->
+
+<script>
+
+
+const API_URL =
+    "https://sentimental-analyser-u3ht.onrender.com";
+
+
+
+document
+    .getElementById("registerForm")
+    .addEventListener("submit", async function(event) {
+
+
+        event.preventDefault();
+
+
+
+        // Get form values
+
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        const confirmPassword =
+            document
+                .getElementById("confirm_password")
+                .value;
+
+
+
+        const registerButton =
+            document
+                .getElementById("registerButton");
+
+
+        const errorMessage =
+            document
+                .getElementById("errorMessage");
+
+
+        const successMessage =
+            document
+                .getElementById("successMessage");
+
+
+
+        // Hide previous messages
+
+        errorMessage.style.display = "none";
+
+        successMessage.style.display = "none";
+
+
+
+        // Check passwords
+
+        if (password !== confirmPassword) {
+
+            errorMessage.textContent =
+                "Passwords do not match.";
+
+            errorMessage.style.display =
+                "block";
+
+            return;
+        }
+
+
+
+        // Disable button
+
+        registerButton.disabled = true;
+
+        registerButton.textContent =
+            "Creating Account...";
+
+
+
+        try {
+
+
+            // Send registration request to Django
+
+            const response =
+                await fetch(
+                    `${API_URL}/api/register/`,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            username: username,
+
+                            email: email,
+
+                            password: password,
+
+                            confirm_password:
+                                confirmPassword
+
+                        })
+
+                    }
+                );
+
+
+
+            const data =
+                await response.json();
+
+
+
+            // Check response
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "Registration failed."
+                );
+
+            }
+
+
+
+            // Show success
+
+            successMessage.textContent =
+                "Registration successful! Redirecting to login...";
+
+
+            successMessage.style.display =
+                "block";
+
+
+
+            // Clear form
+
+            document
+                .getElementById("registerForm")
+                .reset();
+
+
+
+            // Redirect to login
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "login.html";
+
+            }, 1500);
+
+
+        }
+
+
+        catch (error) {
+
+
+            console.error(
+                "Registration error:",
+                error
+            );
+
+
+            errorMessage.textContent =
+                error.message ||
+                "Unable to register. Please try again.";
+
+
+            errorMessage.style.display =
+                "block";
+
+        }
+
+
+
+        // Enable button
+
+        registerButton.disabled = false;
+
+        registerButton.textContent =
+            "Create Account";
+
+
+    });
+
+
+</script>
+
+
 </body>
 
 </html>
+```
