@@ -1,9 +1,20 @@
-function analyzeSentiment() {
+// ==================== Django Backend ====================
+
+const API_URL = "https://sentimental-analyser-u3ht.onrender.com";
+
+
+// ==================== Sentiment Analysis ====================
+
+async function analyzeSentiment() {
 
     const text = document.getElementById("sentimentText").value.trim();
 
     const resultBox = document.getElementById("result");
     const resultText = document.getElementById("sentimentResult");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+
+
+    // Check empty input
 
     if (text === "") {
 
@@ -13,87 +24,67 @@ function analyzeSentiment() {
     }
 
 
-    /*
-        Temporary demonstration.
+    // Show loading message
 
-        Later this will send the text
-        to Django backend using fetch()
-        and the ML model will return:
-
-        Positive
-        Negative
-        Neutral
-    */
-
-    const positiveWords = [
-        "good",
-        "great",
-        "love",
-        "excellent",
-        "amazing",
-        "happy",
-        "wonderful",
-        "best",
-        "awesome"
-    ];
-
-    const negativeWords = [
-        "bad",
-        "terrible",
-        "hate",
-        "worst",
-        "poor",
-        "sad",
-        "awful",
-        "horrible"
-    ];
-
-
-    const lowerText = text.toLowerCase();
-
-    let positiveCount = 0;
-    let negativeCount = 0;
-
-
-    positiveWords.forEach(function(word) {
-
-        if (lowerText.includes(word)) {
-            positiveCount++;
-        }
-
-    });
-
-
-    negativeWords.forEach(function(word) {
-
-        if (lowerText.includes(word)) {
-            negativeCount++;
-        }
-
-    });
-
-
-    let sentiment;
-
-
-    if (positiveCount > negativeCount) {
-
-        sentiment = "Positive 😊";
-
-    }
-    else if (negativeCount > positiveCount) {
-
-        sentiment = "Negative 😞";
-
-    }
-    else {
-
-        sentiment = "Neutral 😐";
-
-    }
-
-
-    resultText.textContent = sentiment;
+    analyzeBtn.disabled = true;
+    analyzeBtn.textContent = "Analyzing...";
 
     resultBox.classList.remove("hidden");
+    resultText.textContent = "Analyzing...";
+
+
+    try {
+
+        // Send text to Django backend
+
+        const response = await fetch(`${API_URL}/api/analyze/`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                text: text
+            })
+
+        });
+
+
+        // Check server response
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Server error: ${response.status}`
+            );
+
+        }
+
+
+        // Convert response to JSON
+
+        const data = await response.json();
+
+
+        // Display sentiment returned by Django
+
+        resultText.textContent = data.sentiment || "Unknown";
+
+
+    } catch (error) {
+
+        console.error("Error:", error);
+
+        resultText.textContent =
+            "Unable to analyze sentiment. Please try again.";
+
+    }
+
+
+    // Enable button again
+
+    analyzeBtn.disabled = false;
+    analyzeBtn.textContent = "Analyze Sentiment";
 }
