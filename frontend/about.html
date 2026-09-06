@@ -1,22 +1,27 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>About - SentimentAI</title>
 
     <link rel="stylesheet"
-          href="{% static 'sentiment/css/style.css' %}">
+          href="css/style.css">
+
 
     <style>
+
         .about-container {
             max-width: 900px;
             margin: 60px auto;
             padding: 20px;
         }
+
 
         .about-card {
             background: white;
@@ -25,14 +30,17 @@
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
         }
 
+
         .about-card h1 {
             font-size: 38px;
             margin-bottom: 20px;
         }
 
+
         .about-card h1 span {
             color: #ec4899;
         }
+
 
         .about-card h2 {
             color: #4f46e5;
@@ -40,11 +48,13 @@
             margin-bottom: 10px;
         }
 
+
         .about-card p {
             color: #6b7280;
             line-height: 1.8;
             font-size: 16px;
         }
+
 
         .features {
             margin-top: 15px;
@@ -52,6 +62,7 @@
             color: #6b7280;
             line-height: 2;
         }
+
 
         .back-button {
             display: inline-block;
@@ -63,80 +74,177 @@
             border-radius: 8px;
         }
 
+
         .back-button:hover {
             background: #4338ca;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+<!-- ==================== Navigation ==================== -->
+
 <nav class="navbar">
+
     <div class="logo">
         Sentiment<span>AI</span>
     </div>
 
+
     <div class="nav-links">
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'about' %}">About</a>
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="about.html">
+            About
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+        <a href="register.html">
+            Register
+        </a>
+
     </div>
+
 </nav>
+
+
+
+<!-- ==================== About Section ==================== -->
 
 <div class="about-container">
 
     <div class="about-card">
 
-        <h1>About <span>SentimentAI</span></h1>
+
+        <h1>
+            About <span>SentimentAI</span>
+        </h1>
+
 
         <p>
+
             SentimentAI is an AI-powered Natural Language Processing
             system designed to analyze the emotional tone of text.
             The system identifies whether the given sentence expresses
             a positive, negative, or neutral sentiment.
+
         </p>
 
-        <h2>How It Works</h2>
+
+
+        <h2>
+            How It Works
+        </h2>
+
 
         <p>
+
             The user enters a sentence into the system. The text is
             processed using Natural Language Processing techniques and
             a machine learning model analyzes the text to determine
             its sentiment.
+
         </p>
 
-        <h2>Key Features</h2>
+
+
+        <h2>
+            Key Features
+        </h2>
+
 
         <ul class="features">
-            <li>Positive, Negative and Neutral sentiment classification</li>
-            <li>Natural Language Processing</li>
-            <li>Machine Learning based prediction</li>
-            <li>User registration and login</li>
-            <li>Sentiment analysis history</li>
-            <li>Simple and user-friendly interface</li>
+
+            <li>
+                Positive, Negative and Neutral sentiment classification
+            </li>
+
+            <li>
+                Natural Language Processing
+            </li>
+
+            <li>
+                Machine Learning based prediction
+            </li>
+
+            <li>
+                User registration and login
+            </li>
+
+            <li>
+                Sentiment analysis history
+            </li>
+
+            <li>
+                Simple and user-friendly interface
+            </li>
+
         </ul>
 
-        <h2>Technology Used</h2>
+
+
+        <h2>
+            Technology Used
+        </h2>
+
 
         <p>
-            <strong>Frontend:</strong> HTML, CSS, Tailwind CSS<br>
-            <strong>Backend:</strong> Django<br>
-            <strong>Database:</strong> SQLite3<br>
-            <strong>AI/ML:</strong> Python, NLP and Machine Learning
+
+            <strong>Frontend:</strong>
+            HTML, CSS, JavaScript
+            <br>
+
+            <strong>Backend:</strong>
+            Django
+            <br>
+
+            <strong>Database:</strong>
+            SQLite3
+            <br>
+
+            <strong>AI/ML:</strong>
+            Python, NLP and Machine Learning
+
         </p>
 
-        <a href="{% url 'home' %}" class="back-button">
+
+
+        <a href="index.html"
+           class="back-button">
+
             Start Analyzing
+
         </a>
+
 
     </div>
 
 </div>
 
+
+
+<!-- ==================== Footer ==================== -->
+
 <footer>
-    <p>© 2026 Sentiment Analysis System</p>
+
+    <p>
+        © 2026 Sentiment Analysis System
+    </p>
+
 </footer>
 
+
 </body>
+
 </html>
