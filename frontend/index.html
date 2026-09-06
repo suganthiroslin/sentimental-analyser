@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentiment Analysis System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ==================== Navigation Bar ==================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Sentiment<span>AI</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a href="register.html">
+                Register
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ==================== Main Section ==================== -->
+
+    <main class="hero">
+
+        <div class="hero-content">
+
+            <!-- AI Title -->
+
+            <p class="small-title">
+                AI POWERED NLP SYSTEM
+            </p>
+
+
+            <!-- Main Heading -->
+
+            <h1>
+                Understand the
+                <span>Emotion</span>
+                Behind Your Words
+            </h1>
+
+
+            <!-- Description -->
+
+            <p class="description">
+
+                Enter a sentence and our sentiment analysis system
+                will identify whether the sentiment is positive,
+                negative, or neutral.
+
+            </p>
+
+
+            <!-- ================================================= -->
+            <!-- Sentiment Analysis Card -->
+            <!-- ================================================= -->
+
+            <div class="sentiment-card">
+
+                <label for="sentimentText">
+                    Enter your sentence
+                </label>
+
+
+                <textarea
+                    id="sentimentText"
+                    placeholder="Example: I really enjoyed this product..."
+                    rows="5"></textarea>
+
+
+                <button
+                    id="analyzeBtn"
+                    onclick="analyzeSentiment()">
+
+                    Analyze Sentiment
+
+                </button>
+
+
+                <!-- ==================== Result ==================== -->
+
+                <div id="result" class="result hidden">
+
+                    <p class="result-label">
+                        Sentiment Result
+                    </p>
+
+                    <h2 id="sentimentResult">
+                        Positive
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================== Footer ==================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Sentiment Analysis System
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
